@@ -1,0 +1,1 @@
+export { adminAuth, userAuth } from './auth.middleware.js'

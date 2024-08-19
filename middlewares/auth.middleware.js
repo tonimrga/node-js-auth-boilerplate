@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 
+// route middleware for checking if the user is of role="admin"
 export function adminAuth(req, res, next) {
     const token = req.cookies.jwt;
     const jwtSecret = process.env.JWT_SECRET;
@@ -14,6 +15,7 @@ export function adminAuth(req, res, next) {
         }
 
         if (decodedToken.role !== "admin") {
+            console.log(decodedToken.role)
             return res.status(401).send("Not authorized.");
         }
 
@@ -21,6 +23,7 @@ export function adminAuth(req, res, next) {
     });
 }
 
+// route middleware for checking if the user is of role="user"
 export function userAuth(req, res, next) {
     const token = req.cookies.jwt
     const jwtSecret = process.env.JWT_SECRET;

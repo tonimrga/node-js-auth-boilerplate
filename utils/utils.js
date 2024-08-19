@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken';
 
 import { JWT_TOKEN_MAX_AGE } from "../consts/consts.js";
 
+// hashing function used for passwords
 export async function hashPassword(password) {
     try {
         const salt = await bcrypt.genSalt(10);
@@ -13,6 +14,7 @@ export async function hashPassword(password) {
     }
 }
 
+// function for comparing user password and a hash stored in database
 export async function comparePasswords(password, userPassword) {
     try {
         const result = await bcrypt.compare(password, userPassword);
@@ -22,6 +24,7 @@ export async function comparePasswords(password, userPassword) {
     }
 }
 
+// function for creating the JWT with user data in it
 export function createJWTToken(user) {
     const jwtSecret = process.env.JWT_SECRET;
     const { _id: id, username, role } = user;

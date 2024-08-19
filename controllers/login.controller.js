@@ -1,6 +1,6 @@
-import { JWT_TOKEN_MAX_AGE } from '../../consts/consts.js';
-import User from '../../models/user.model.js';
-import { comparePasswords, createJWTToken } from '../../utils/utils.js';
+import { JWT_TOKEN_MAX_AGE } from '../consts/consts.js';
+import { User } from '../models/index.js';
+import { comparePasswords, createJWTToken } from '../utils/utils.js';
 
 export async function login(req, res) {
     const { username, password } = req.body;
@@ -25,7 +25,10 @@ export async function login(req, res) {
             httpOnly: true,
             maxAge: JWT_TOKEN_MAX_AGE * 1000, // 3hrs in ms
         });
-        res.status(200).send(user);
+        res.status(200).json({
+            username: user.username,
+            role: user.role,
+        });
     } catch (error) {
         res.status(400).send("Error logging in the user.");
     }
